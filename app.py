@@ -1,14 +1,15 @@
 import streamlit as st
-from pages import home, relationship_quiz, memory_timeline, mini_games, secret_letter, progress_page
 
-
-# Page configuration
+# Page configuration - MUST be first Streamlit command
 st.set_page_config(
     page_title="Love Arcade Deluxe",
     page_icon="💕",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Import page modules after set_page_config
+from modules import home, relationship_quiz, memory_timeline, mini_games, secret_letter, progress_page
 
 
 # Custom CSS for pastel theme with rounded UI
@@ -136,6 +137,13 @@ def initialize_state():
         st.session_state.memory_cards = []
         st.session_state.flipped_cards = []
         
+        # Memory timeline
+        st.session_state.memories = []
+
+        # Reaction game state
+        st.session_state.reaction_state = "ready"
+        st.session_state.reaction_start_time = None
+
         # Level system
         st.session_state.level = 1
         
