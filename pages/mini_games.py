@@ -166,6 +166,9 @@ def show_memory_match():
                         st.button(card['emoji'], key=f"card_{idx}", disabled=True, use_container_width=True)
                     else:
                         if st.button("❓", key=f"card_{idx}", use_container_width=True):
+                            # If two cards are already flipped and don't match, reset them first
+                            if len(st.session_state.flipped_cards) == 2:
+                                st.session_state.flipped_cards = []
                             handle_card_flip(idx)
                             st.rerun()
     
@@ -197,10 +200,11 @@ def handle_card_flip(idx):
             if st.session_state.memory_cards[idx1]['emoji'] == st.session_state.memory_cards[idx2]['emoji']:
                 st.session_state.memory_cards[idx1]['matched'] = True
                 st.session_state.memory_cards[idx2]['matched'] = True
-            
-            # Reset flipped cards after a delay (handled in next interaction)
-            time.sleep(0.5)
-            st.session_state.flipped_cards = []
+                # Immediately clear flipped cards for matched pairs
+                st.session_state.flipped_cards = []
+            else:
+                # For non-matching pairs, cards will stay flipped until next click
+                pass
 
 
 def show_reaction_game():
@@ -234,7 +238,14 @@ def show_reaction_game():
             st.rerun()
         else:
             st.warning("⏳ Wait for it...")
-            time.sleep(0.1)
+            # Use a placeholder to auto-refresh when ready
+            remaining = st.session_state.reaction_start_time - current_time
+            st.write(f"Get ready... ({remaining:.1f}s)")
+            # Rerun after a reasonable interval
+            if remaining > 0.5:
+                time.sleep(0.5)
+            else:
+                time.sleep(remaining)
             st.rerun()
     
     elif st.session_state.reaction_state == "go":
