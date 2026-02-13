@@ -10,102 +10,7 @@ st.set_page_config(
 
 # Import page modules after set_page_config
 from modules import home, relationship_quiz, memory_timeline, mini_games, secret_letter, progress_page
-
-
-# Custom CSS for pastel theme with rounded UI
-def load_css():
-    st.markdown("""
-    <style>
-        /* Pastel color scheme */
-        :root {
-            --pastel-pink: #FFD1DC;
-            --pastel-purple: #E0BBE4;
-            --pastel-blue: #BFEAF5;
-            --pastel-yellow: #FFFACD;
-            --pastel-green: #C1FFC1;
-            --pastel-peach: #FFE5CC;
-        }
-        
-        /* Main app styling */
-        .stApp {
-            background: linear-gradient(135deg, #FFD1DC 0%, #E0BBE4 100%);
-        }
-        
-        /* Sidebar styling */
-        [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #E0BBE4 0%, #BFEAF5 100%);
-            border-radius: 15px;
-            padding: 20px;
-        }
-        
-        /* Buttons */
-        .stButton > button {
-            border-radius: 20px;
-            border: none;
-            background: linear-gradient(135deg, #FFD1DC 0%, #E0BBE4 100%);
-            color: #333;
-            font-weight: bold;
-            padding: 10px 25px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .stButton > button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-        }
-        
-        /* Text input and other inputs */
-        .stTextInput > div > div > input,
-        .stSelectbox > div > div > select,
-        .stNumberInput > div > div > input {
-            border-radius: 15px;
-            border: 2px solid #E0BBE4;
-            padding: 10px;
-        }
-        
-        /* Cards/containers */
-        .stMetric,
-        [data-testid="stMetricValue"] {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        /* Headers */
-        h1, h2, h3 {
-            color: #8B4789;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
-        }
-        
-        /* Progress bar */
-        .stProgress > div > div > div > div {
-            background: linear-gradient(90deg, #FFD1DC 0%, #E0BBE4 50%, #BFEAF5 100%);
-            border-radius: 10px;
-        }
-        
-        /* Expander */
-        .streamlit-expanderHeader {
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 15px;
-            border: 2px solid #E0BBE4;
-        }
-        
-        /* Info boxes */
-        .stAlert {
-            border-radius: 15px;
-        }
-        
-        /* Radio buttons */
-        .stRadio > label {
-            background: rgba(255, 255, 255, 0.6);
-            padding: 10px;
-            border-radius: 10px;
-            margin: 5px 0;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+from modules.ui_components import load_global_css, render_level_badge
 
 
 # Initialize session state
@@ -156,25 +61,51 @@ def initialize_state():
 
 def main():
     initialize_state()
-    load_css()
-    
+    load_global_css()
+
     # Sidebar navigation
-    st.sidebar.title("💕 Love Arcade Deluxe")
-    st.sidebar.markdown("---")
-    
-    # Display current score and level in sidebar
-    st.sidebar.metric("Total Score", st.session_state.total_score)
-    st.sidebar.metric("Level", st.session_state.level)
-    st.sidebar.markdown("---")
-    
-    # Navigation
-    page = st.sidebar.radio(
-        "Navigate",
-        ["🏠 Home", "💑 Relationship Quiz", "📸 Memory Timeline", 
-         "🎮 Mini Games", "💌 Secret Letter", "📊 Progress"],
-        label_visibility="collapsed"
-    )
-    
+    with st.sidebar:
+        st.markdown("""
+        <div style="text-align: center; padding: 16px 0 24px 0;">
+            <div style="font-size: 2.5rem; margin-bottom: 8px;">💕</div>
+            <h1 style="font-size: 1.3rem !important; margin: 0 !important; text-align: center !important;">
+                Love Arcade Deluxe
+            </h1>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Display current score and level in sidebar with custom styling
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Score", st.session_state.total_score)
+        with col2:
+            st.metric("Level", st.session_state.level)
+
+        # Level badge
+        st.markdown("<div style='margin: 16px 0;'>", unsafe_allow_html=True)
+        render_level_badge(st.session_state.level)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Navigation
+        page = st.radio(
+            "Navigate",
+            ["🏠 Home", "💑 Relationship Quiz", "📸 Memory Timeline",
+             "🎮 Mini Games", "💌 Secret Letter", "📊 Progress"],
+            label_visibility="collapsed"
+        )
+
+        # Footer
+        st.markdown("---")
+        st.markdown("""
+        <div style="text-align: center; padding: 16px 0; opacity: 0.7;">
+            <small>Made with 💕</small>
+        </div>
+        """, unsafe_allow_html=True)
+
     # Route to appropriate page
     if page == "🏠 Home":
         home.show()
