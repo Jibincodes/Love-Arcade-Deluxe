@@ -239,8 +239,13 @@ def show_reaction_game():
         else:
             remaining = st.session_state.reaction_start_time - current_time
             st.warning("⏳ Wait for it...")
-            st.write(f"Get ready... ({remaining:.1f}s)")
-            # Trigger rerun to check again
+            
+            # Use an empty placeholder for smooth updates
+            placeholder = st.empty()
+            placeholder.write(f"Get ready... ({remaining:.1f}s)")
+            
+            # Add a small delay to reduce rerun frequency
+            time.sleep(0.1)
             st.rerun()
     
     elif st.session_state.reaction_state == "go":

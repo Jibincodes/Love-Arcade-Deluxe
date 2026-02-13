@@ -54,7 +54,10 @@ def show():
     
     else:
         # Letter is unlocked - show the secret message
-        st.balloons()
+        # Show balloons only on first unlock
+        if "balloons_shown" not in st.session_state:
+            st.session_state.balloons_shown = True
+            st.balloons()
         
         st.markdown("""
         <div style='background: linear-gradient(135deg, #FFD1DC 0%, #E0BBE4 100%); 
