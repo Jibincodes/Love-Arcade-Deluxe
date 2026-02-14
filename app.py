@@ -9,7 +9,12 @@ st.set_page_config(
 )
 
 # Import page modules after set_page_config
-from modules import home, relationship_quiz, memory_timeline, mini_games, secret_letter, progress_page
+from modules import home
+from modules import relationship_quiz
+from modules import memory_timeline
+from modules import mini_games
+from modules import secret_letter
+from modules import progress_page
 from modules.ui_components import load_global_css, render_level_badge
 
 
