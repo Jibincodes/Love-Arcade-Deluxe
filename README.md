@@ -2,6 +2,27 @@
 
 A beautifully designed Streamlit application featuring interactive games and activities with a polished, graphic-designer-level aesthetic and soft pastel romantic palette.
 
+## 🚀 Live Demo
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-app-url.streamlit.app)
+
+## 🌐 Deployment
+
+### Streamlit Community Cloud (Recommended)
+1. Fork/clone this repository to your GitHub
+2. Visit [share.streamlit.io](https://share.streamlit.io)
+3. Connect your GitHub account
+4. Deploy from your repository
+5. Your app will be live at `https://your-username-love-arcade-deluxe.streamlit.app`
+
+### Local Development
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+streamlit run app.py
+```
+
 ## ✨ Features
 
 ### 🏠 Home Page
