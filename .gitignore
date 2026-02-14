@@ -6,9 +6,10 @@ __pycache__/
 env/
 venv/
 ENV/
-.venv
+.venv/
 *.egg-info/
 dist/
 build/
 .DS_Store
-.streamlit/
+.idea/
+*.log

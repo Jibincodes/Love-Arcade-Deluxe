@@ -1,4 +1,9 @@
 import streamlit as st
+import sys
+import os
+
+# Add current directory to Python path for Streamlit Cloud
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Page configuration - MUST be first Streamlit command
 st.set_page_config(
@@ -8,14 +13,41 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Import page modules after set_page_config
-from modules import home
-from modules import relationship_quiz
-from modules import memory_timeline
-from modules import mini_games
-from modules import secret_letter
-from modules import progress_page
-from modules.ui_components import load_global_css, render_level_badge
+# Import page modules after set_page_config with error handling
+try:
+    from modules import home
+    from modules import relationship_quiz
+    from modules import memory_timeline
+    from modules import mini_games
+    from modules import secret_letter
+    from modules import progress_page
+    from modules.ui_components import load_global_css, render_level_badge
+except ImportError as e:
+    st.error(f"Import error: {e}")
+    st.info("Trying alternative import method...")
+    # Alternative import method for Streamlit Cloud
+    import importlib.util
+
+    def load_module(module_name, file_path):
+        spec = importlib.util.spec_from_file_location(module_name, file_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    # Load modules directly
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    modules_dir = os.path.join(base_dir, "modules")
+
+    home = load_module("home", os.path.join(modules_dir, "home.py"))
+    relationship_quiz = load_module("relationship_quiz", os.path.join(modules_dir, "relationship_quiz.py"))
+    memory_timeline = load_module("memory_timeline", os.path.join(modules_dir, "memory_timeline.py"))
+    mini_games = load_module("mini_games", os.path.join(modules_dir, "mini_games.py"))
+    secret_letter = load_module("secret_letter", os.path.join(modules_dir, "secret_letter.py"))
+    progress_page = load_module("progress_page", os.path.join(modules_dir, "progress_page.py"))
+    ui_components = load_module("ui_components", os.path.join(modules_dir, "ui_components.py"))
+
+    load_global_css = ui_components.load_global_css
+    render_level_badge = ui_components.render_level_badge
 
 
 # Initialize session state
