@@ -2,8 +2,8 @@
 
 A beautifully designed Streamlit application featuring interactive games and activities with a polished, graphic-designer-level aesthetic and soft pastel romantic palette.
 
-## 🚀 Live Demo
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-app-url.streamlit.app)
+## 🚀 App - Deployed!
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://love-arcade-deluxe-gia.streamlit.app/)
 
 ## 🌐 Deployment
 
@@ -29,8 +29,7 @@ This repository has been updated to resolve the `ImportError` that was preventin
    - Connect your GitHub account
    - Select your repository
    - **Important:** Make sure your repository is public or you have a Streamlit Cloud Pro account
-   - Your app will be live at `https://your-username-love-arcade-deluxe.streamlit.app`
-
+   
 ### 🧪 Pre-Deployment Testing
 Before deploying, you can verify everything works locally:
 ```bash
