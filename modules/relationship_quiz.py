@@ -2,21 +2,19 @@ import streamlit as st
 import sys
 import os
 
-# Add parent directory to path for imports
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-try:
-    from .ui_components import render_page_header, render_progress_card
-except ImportError:
-    # Fallback for Streamlit Cloud
+# Get ui_components from sys.modules (loaded by app.py)
+if "ui_components" in sys.modules:
+    ui_components = sys.modules["ui_components"]
+else:
+    # Fallback: load directly
     import importlib.util
     ui_components_path = os.path.join(os.path.dirname(__file__), "ui_components.py")
     spec = importlib.util.spec_from_file_location("ui_components", ui_components_path)
     ui_components = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(ui_components)
 
-    render_page_header = ui_components.render_page_header
-    render_progress_card = ui_components.render_progress_card
+render_page_header = ui_components.render_page_header
+render_progress_card = ui_components.render_progress_card
 
 
 def show():

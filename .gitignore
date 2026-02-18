@@ -13,3 +13,35 @@ build/
 .DS_Store
 .idea/
 *.log
+
+# Security - Never commit these
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+.streamlit/secrets.toml
+config.json
+credentials.json
+*.credential*
+.aws/
+.gcp/
+
+# Editor and OS
+.vscode/
+*.swp
+*.swo
+*~
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Distribution
+*.egg
+MANIFEST
+
